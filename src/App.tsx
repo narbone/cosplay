@@ -4,8 +4,8 @@
  */
 
 import React from "react";
-import { motion } from "motion/react";
-import { ArrowDown, Instagram } from "lucide-react";
+import { motion } from "framer-motion"; // Note: standard import for stability
+import { Instagram } from "lucide-react";
 
 interface SectionProps {
   text: string;
@@ -22,76 +22,69 @@ const Section: React.FC<SectionProps> = ({
   text,
   bgImageUrl,
   bgColor,
-  gradient,
   textColor,
   accentColor,
   id,
   index,
 }) => {
+  // Your exact coordinates
+  const POSITIONS = [
+    "bottom-20 md:top-20 md:right-12 max-w-[280px] md:max-w-md", // 0: Top Right
+    "bottom-40 md:bottom-20 md:left-12 max-w-[320px] ", // 1: Bottom Left
+    "bottom-10 md:bottom-20 md:right-12 max-w-[280px] md:max-w-md", // 2: Bottom Right
+  ];
+
   return (
     <section
       id={id}
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden font-mono"
-      style={{
-        backgroundColor: bgColor,
-        background: gradient || bgColor,
-        color: textColor,
-      }}
+      className="relative h-screen w-full overflow-hidden bg-charcoal font-mono "
+      style={{ backgroundColor: bgColor }}
     >
-      {/* Background Image */}
-      {bgImageUrl && (
-        <>
-          <div
-            className="absolute inset-0 z-0"
-            style={{
-              backgroundImage: `url(${bgImageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
-          <div className="absolute inset-0 z-0 bg-black/40" />
-        </>
-      )}
-
-      <div className="absolute inset-0 w-full h-full max-w-[1600px] mx-auto z-10 pointer-events-none">
-        {/* Text Content */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className={`absolute pointer-events-auto left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] md:w-auto md:translate-x-0 md:translate-y-0 ${
-            index === 0
-              ? "md:bottom-auto md:top-12 md:right-12 lg:right-24 md:left-auto"
-              : index === 1
-                ? "md:top-auto md:bottom-12 md:left-12 lg:left-24 md:right-auto"
-                : "md:top-auto md:bottom-12 md:right-12 lg:right-24 md:left-auto"
-          }`}
-        >
-          <div
-            className="p-6 md:p-8 backdrop-blur-md border-2 rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,0,0,0.2)] mx-auto md:mx-0 max-w-[320px] md:max-w-[400px]"
-            style={{
-              backgroundColor: `${bgColor}cc`,
-              borderColor: accentColor,
-              color: textColor,
-            }}
-          >
-            <span
-              className="text-[10px] font-bold tracking-widest opacity-60 block mb-3 text-center md:text-left"
-              style={{ color: accentColor }}
-            >
-              section 0{index + 1}
-            </span>
-            <p className="text-xs md:text-sm leading-relaxed italic text-center md:text-left">
-              {text}
-            </p>
+      {/* 1. The Constrained Container (1600px limit) */}
+      <div className="relative size-full max-w-[1600px] mx-auto overflow-hidden">
+        {/* Background Layer inside the 1600px box */}
+        {bgImageUrl && (
+          <div className="absolute inset-0 size-full z-0">
+            <div
+              className="size-full bg-cover bg-center"
+              style={{ backgroundImage: `url(${bgImageUrl})` }}
+            />
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-black/40" />
           </div>
-        </motion.div>
-      </div>
+        )}
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 opacity-30">
-        <ArrowDown size={32} strokeWidth={1} className="animate-bounce" />
+        {/* 2. The Anchor Layer (The invisible grid for positioning) */}
+        <div className="absolute inset-0 size-full z-10 pointer-events-none">
+          <motion.div
+            // initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 0.8, y: 0 }}
+            viewport={{ once: true }}
+            // transition={{ duration: 0.7 }}
+            className={`
+    absolute pointer-events-auto w-[85%]
+    
+    inset-x-0 mx-auto 
+    
+    md:inset-x-auto md:mx-0 md:w-fit 
+    
+    ${POSITIONS[index]}
+  `}
+          >
+            <div
+              className="p-6 md:p-8 max-w-sm md:max-w-md"
+              style={{
+                backgroundColor: `${bgColor}cc`,
+                borderColor: accentColor,
+                color: textColor,
+              }}
+            >
+              <p className="text-base text-xl md:text-xl leading-relaxed text-center md:text-left">
+                {text}
+              </p>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -101,41 +94,42 @@ export default function App() {
   const sections = [
     {
       id: "vision",
-      text: "We don't follow trends. We create artifacts. Digital experiences that feel tangible, imperfect, and human. Stripping away the corporate polish to reveal the soul of the project.",
-      bgColor: "#3D3E40", // Charcoal
-      textColor: "#F2D8CE", // Peach
-      accentColor: "#D9BEA7", // Light Tan
+      text: "We don't follow trends. We create artifacts. Digital experiences that feel tangible, imperfect, and human.",
+      bgColor: "#3D3E40",
+      textColor: "#F2D8CE",
+      accentColor: "#D9BEA7",
       bgImageUrl: "/images/class.jpeg",
     },
     {
       id: "process",
-      text: "Hand-crafted algorithms and deliberate imperfections. We believe the best work happens in the margins. A process that values intuition over metrics.",
-      bgColor: "#D9BEA7", // Fallback Tan
-      textColor: "#F2D8CE", // Changed to Peach for better contrast on dark gradient
-      accentColor: "#BFBDB8", // Light Gray
+      text: "Hand-crafted algorithms and deliberate imperfections. We believe the best work happens in the margins.",
+      bgColor: "#D9BEA7",
+      textColor: "#3D3E40",
+      accentColor: "#A60311",
       bgImageUrl: "/images/draw.jpeg",
     },
     {
       id: "impact",
-      text: "Creating ripples that last. Our work isn't meant to be consumed and forgotten. It's meant to be felt. A digital resonance that lingers long after the tab is closed.",
-      bgColor: "#F2D8CE", // Fallback Peach
-      textColor: "#3D3E40", // Charcoal
-      accentColor: "#A60311", // Deep Red
+      text: "Creating ripples that last. Our work isn't meant to be consumed and forgotten. It's meant to be felt.",
+      bgColor: "#F2D8CE",
+      textColor: "#3D3E40",
+      accentColor: "#A60311",
       bgImageUrl: "/images/siluette.jpeg",
     },
   ];
 
   return (
-    <main className="w-full font-mono selection:bg-yellow selection:text-charcoal">
+    <main className="size-full font-mono bg-[#3D3E40]">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center">
-        <div className="w-32 h-auto">
-          <img
-            src="images/vv-logo.png"
-            alt="logo"
-            className="w-full h-full rounded-md"
-            referrerPolicy="no-referrer"
-          />
+      <nav className="fixed top-0 inset-x-0 z-50 p-6 pointer-events-none">
+        <div className="max-w-[1600px] mx-auto flex justify-between items-start pointer-events-auto">
+          <div className="w-24 md:w-28 border-4 border-[#F2D8CE]">
+            <img
+              src="images/vv-logo.png"
+              alt="logo"
+              className="size-full object-contain"
+            />
+          </div>
         </div>
       </nav>
 
@@ -145,38 +139,34 @@ export default function App() {
       ))}
 
       {/* Footer */}
-      <footer
-        className="text-charcoal py-24 px-8 border-t-8 border-charcoal"
-        style={{
-          background:
-            "linear-gradient(135deg, #3D3E40 0%, #A6886D 25%, #D9BEA7 50%, #733B1A 75%, #F2D8CE 100%)",
-        }}
-      >
-        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-end gap-12">
-          <div className="space-y-4">
-            <div className="text-8xl font-display leading-none text-charcoal">
-              indie.
-            </div>
-            <p className="text-sm opacity-70 max-w-xs">
-              Built with intention. No trackers. No fluff. Just the work.
+      <footer className="bg-[#D9BEA7] text-[#3D3E40] py-10 px-8 border-t-[12px] border-[#3D3E40]">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-end gap-16">
+          <div className="max-w-2xl">
+            <h2 className="text-5xl md:text-8xl font-bold leading-[0.9] tracking-tighter mb-8">
+              cosplay drawing classes.
+            </h2>
+
+            {/* Container for the text + inline instagram link */}
+            <p className="text-lg md:text-xl opacity-80 font-medium leading-relaxed">
+              hosted by victoria art sydney. find the next available date on
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="whitespace-nowrap group inline-flex items-center gap-3 ml-2 align-middle transition-all hover:opacity-100"
+              >
+                <span className="decoration-2">instagram</span>
+                <div className="p-2 border-2 border-[#3D3E40] rounded-lg group-hover:bg-[#3D3E40] group-hover:text-[#F2D8CE] transition-colors">
+                  <Instagram size={20} />
+                </div>
+              </a>
             </p>
           </div>
-
-          <div className="flex flex-col items-end gap-6">
-            <a
-              href="https://instagram.com/yourprofile"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-4 text-xl hover:line-through transition-all"
-            >
-              <span>instagram</span>
-              <div className="p-3 border-2 border-charcoal rounded-xl group-hover:bg-charcoal group-hover:text-peach group-hover:border-charcoal transition-all">
-                <Instagram size={24} />
-              </div>
-            </a>
-            <div className="text-[10px] tracking-[0.5em] opacity-50">
-              © 2026 all rights reserved
-            </div>
+        </div>
+        {/* Copyright stays pushed to the right/bottom */}
+        <div className="w-full md:w-auto flex justify-center pt-10">
+          <div className="text-md tracking-[0.4em] opacity-40 text-center md:text-right">
+            narbone.com © 2026
           </div>
         </div>
       </footer>

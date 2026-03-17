@@ -1,13 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500&display=swap');
+/* 1. External font imports MUST be at the very top */
+@import url("https://googleapis.com");
+
+/* 2. Import Tailwind v4 core */
 @import "tailwindcss";
 
+/* 3. Define your theme tokens */
 @theme {
+  /* Fonts */
   --font-display: "Anton", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --color-charcoal: #3D3E40;
-  --color-yellow: #F2CE16;
-  --color-brown: #A6886D;
-  --color-tan: #D9BEA7;
-  --color-peach: #F2D8CE;
+  /* Custom Colors (generates classes like bg-charcoal, text-peach, etc.) */
+  --color-charcoal: #3d3e40;
+  --color-yellow: #f2ce16;
+  --color-brown: #a6886d;
+  --color-tan: #d9bea7;
+  --color-peach: #f2d8ce;
+}
+
+/* 4. Optional: Global resets or base styles */
+@layer base {
+  body {
+    @apply bg-charcoal text-peach antialiased;
+  }
 }
