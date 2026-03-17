@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Anton", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-charcoal: #3D3E40;
+  --color-yellow: #F2CE16;
+  --color-brown: #A6886D;
+  --color-tan: #D9BEA7;
+  --color-peach: #F2D8CE;
+}
