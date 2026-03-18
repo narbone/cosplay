@@ -29,9 +29,9 @@ const Section: React.FC<SectionProps> = ({
 }) => {
   // Your exact coordinates
   const POSITIONS = [
-    "bottom-20 md:top-20 md:right-12 max-w-[280px] md:max-w-md", // 0: Top Right
-    "bottom-40 md:bottom-20 md:left-12 max-w-[320px] ", // 1: Bottom Left
-    "bottom-10 md:bottom-20 md:right-12 max-w-[280px] md:max-w-md", // 2: Bottom Right
+    "bottom-20 md:top-30 md:right-20 max-w-[280px] md:max-w-md",
+    "bottom-30 md:bottom-20 md:left-40 max-w-[280px] md:max-w-md ",
+    "bottom-30 md:bottom-20 md:right-10 max-w-[280px] md:max-w-md",
   ];
 
   return (
@@ -46,7 +46,7 @@ const Section: React.FC<SectionProps> = ({
         {bgImageUrl && (
           <div className="absolute inset-0 size-full z-0">
             <div
-              className="size-full bg-cover bg-center"
+              className="size-full bg-cover lg:bg-contain bg-center bg-no-repeat"
               style={{ backgroundImage: `url(${bgImageUrl})` }}
             />
             {/* Dark overlay for text readability */}
@@ -79,7 +79,7 @@ const Section: React.FC<SectionProps> = ({
                 color: textColor,
               }}
             >
-              <p className="text-base text-xl md:text-xl leading-relaxed text-center md:text-left">
+              <p className="text-base text-xl md:text-2xl text-left font-medium">
                 {text}
               </p>
             </div>
@@ -121,9 +121,9 @@ export default function App() {
   return (
     <main className="size-full font-mono bg-[#3D3E40]">
       {/* Navigation */}
-      <nav className="fixed top-0 inset-x-0 z-50 p-6 pointer-events-none">
+      <nav className="fixed lg:left-20 top-0 inset-x-0 z-50 p-6 pointer-events-none">
         <div className="max-w-[1600px] mx-auto flex justify-between items-start pointer-events-auto">
-          <div className="w-24 md:w-28 border-4 border-[#F2D8CE]">
+          <div className="w-24 lg:w-28 border-4 border-[#F2D8CE]">
             <img
               src="images/vv-logo.png"
               alt="logo"
@@ -139,23 +139,23 @@ export default function App() {
       ))}
 
       {/* Footer */}
-      <footer className="bg-[#D9BEA7] text-[#3D3E40] py-10 px-8 border-t-[12px] border-[#3D3E40]">
+      <footer className="bg-[#D9BEA7] text-[#3D3E40] py-10 px-8 border-t-[6px] border-[#3D3E40]">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-end gap-16">
           <div className="max-w-2xl">
-            <h2 className="text-5xl md:text-8xl font-bold leading-[0.9] tracking-tighter mb-8">
-              cosplay drawing classes.
+            <h2 className="text-5xl md:text-6xl font-bold leading-[0.9] tracking-tighter mb-8">
+              Cosplay drawing classes.
             </h2>
 
             {/* Container for the text + inline instagram link */}
             <p className="text-lg md:text-xl opacity-80 font-medium leading-relaxed">
-              hosted by victoria art sydney. find the next available date on
+              Hosted by Victoria Art Sydney. Find the next available date on
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whitespace-nowrap group inline-flex items-center gap-3 ml-2 align-middle transition-all hover:opacity-100"
               >
-                <span className="decoration-2">instagram</span>
+                <span className="decoration-2">Instagram</span>
                 <div className="p-2 border-2 border-[#3D3E40] rounded-lg group-hover:bg-[#3D3E40] group-hover:text-[#F2D8CE] transition-colors">
                   <Instagram size={20} />
                 </div>
