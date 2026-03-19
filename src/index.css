@@ -1,16 +1,9 @@
-/* 1. External font imports MUST be at the very top */
-@import url("https://googleapis.com");
-
-/* 2. Import Tailwind v4 core */
 @import "tailwindcss";
 
-/* 3. Define your theme tokens */
 @theme {
-  /* Fonts */
   --font-display: "Anton", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-mono: "JetBrains Mono", monospace;
 
-  /* Custom Colors (generates classes like bg-charcoal, text-peach, etc.) */
   --color-charcoal: #3d3e40;
   --color-yellow: #f2ce16;
   --color-brown: #a6886d;
@@ -18,7 +11,6 @@
   --color-peach: #f2d8ce;
 }
 
-/* 4. Optional: Global resets or base styles */
 @layer base {
   body {
     @apply bg-charcoal text-peach antialiased;
