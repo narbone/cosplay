@@ -22,7 +22,9 @@ interface SectionData {
   bgColor: string;
   textColor: string;
   accentColor: string;
+  textPosition?: string;
   bgImageUrl?: string;
+  bgImagePosition?: string;
 }
 
 interface SectionProps extends SectionData {
@@ -33,11 +35,18 @@ interface SectionProps extends SectionData {
 // CONSTANTS
 // ---------------------------------------------------------------------------
 
-/** Tailwind position classes for each section card (mobile + desktop). */
-const SECTION_POSITIONS: string[] = [
+/** Tailwind position classes for each section text card (mobile + desktop). */
+const TEXT_POSITIONS: string[] = [
   "bottom-20 md:top-30 md:right-20 max-w-[280px] md:max-w-md",
-  "bottom-30 md:bottom-20 md:left-40 max-w-[280px] md:max-w-md",
-  "bottom-30 md:bottom-20 md:right-10 max-w-[280px] md:max-w-md",
+  "bottom-30 md:top-30 md:left-40 max-w-[280px] md:max-w-md",
+  "bottom-30 md:bottom-40 md:right-30 max-w-[280px] md:max-w-md",
+];
+
+/** Tailwind background-position classes for each section image. */
+const BG_IMAGE_POSITIONS: string[] = [
+  "bg-center", // vision  — centred
+  "bg-center md:bg-[76%_center]", // process — top on mobile, offset right on desktop
+  "bg-center md:bg-[20%_center]", // impact  — bottom on mobile, right-aligned on desktop
 ];
 
 // ---------------------------------------------------------------------------
@@ -50,7 +59,9 @@ const MOCK_SECTIONS: SectionData[] = [
     bgColor: "#3D3E40",
     textColor: "#F2D8CE",
     accentColor: "#D9BEA7",
+    textPosition: TEXT_POSITIONS[0],
     bgImageUrl: "/images/class.jpeg",
+    bgImagePosition: BG_IMAGE_POSITIONS[0],
   },
   {
     id: "process",
@@ -58,7 +69,9 @@ const MOCK_SECTIONS: SectionData[] = [
     bgColor: "#D9BEA7",
     textColor: "#3D3E40",
     accentColor: "#A60311",
+    textPosition: TEXT_POSITIONS[1],
     bgImageUrl: "/images/draw.jpeg",
+    bgImagePosition: BG_IMAGE_POSITIONS[1],
   },
   {
     id: "impact",
@@ -66,7 +79,9 @@ const MOCK_SECTIONS: SectionData[] = [
     bgColor: "#F2D8CE",
     textColor: "#3D3E40",
     accentColor: "#A60311",
+    textPosition: TEXT_POSITIONS[2],
     bgImageUrl: "/images/siluette.jpeg",
+    bgImagePosition: BG_IMAGE_POSITIONS[2],
   },
 ];
 
@@ -114,12 +129,15 @@ const Section: React.FC<SectionProps> = ({
   id,
   text,
   bgImageUrl,
+  bgImagePosition,
   bgColor,
   textColor,
   accentColor,
+  textPosition,
   index,
 }) => {
-  const cardPositionClass = SECTION_POSITIONS[index] ?? SECTION_POSITIONS[0];
+  const textPosClass = textPosition ?? TEXT_POSITIONS[0];
+  const bgPosClass = bgImagePosition ?? "bg-center";
 
   return (
     <section
@@ -133,7 +151,7 @@ const Section: React.FC<SectionProps> = ({
         {bgImageUrl && (
           <div className="absolute inset-0 size-full z-0">
             <div
-              className="size-full bg-cover lg:bg-contain bg-center bg-no-repeat"
+              className={`size-full bg-cover lg:bg-contain ${bgPosClass} bg-no-repeat`}
               style={{ backgroundImage: `url(${bgImageUrl})` }}
             />
             <div className="absolute inset-0 bg-black/40" />
@@ -149,7 +167,7 @@ const Section: React.FC<SectionProps> = ({
               absolute pointer-events-auto w-[85%]
               inset-x-0 mx-auto
               md:inset-x-auto md:mx-0 md:w-fit
-              ${cardPositionClass}
+              ${textPosClass}
             `}
           >
             <div
@@ -198,7 +216,7 @@ const Footer: React.FC = () => (
         </h2>
 
         <div className="text-lg md:text-xl opacity-80 font-medium leading-relaxed">
-          Hosted by Victoria Art Sydney. Find the next available date on
+          Hosted by Vittoria Art Sydney. Find the next available date on
           <a
             href="https://www.instagram.com/vittoriaartssydney/"
             target="_blank"
@@ -215,7 +233,7 @@ const Footer: React.FC = () => (
     </div>
 
     <div className="w-full md:w-auto flex justify-center pt-10">
-      <div className="text-md tracking-[0.4em] opacity-40 text-center md:text-right">
+      <div className="text-lg tracking-[0.4em] opacity-40 text-center md:text-right">
         <a
           href="https://www.narbone.com"
           target="_blank"
