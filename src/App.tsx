@@ -38,14 +38,14 @@ interface SectionProps extends SectionData {
 /** Tailwind position classes for each section text card (mobile + desktop). */
 const TEXT_POSITIONS: string[] = [
   "bottom-20 md:top-30 md:right-20 max-w-[280px] md:max-w-md",
-  "bottom-30 md:top-30 md:left-40 max-w-[280px] md:max-w-md",
-  "bottom-30 md:bottom-40 md:right-30 max-w-[280px] md:max-w-md",
+  "bottom-30 md:top-50 md:left-40 max-w-[280px] md:max-w-md",
+  "bottom-30 md:bottom-50 md:right-30 max-w-[280px] md:max-w-md",
 ];
 
 /** Tailwind background-position classes for each section image. */
 const BG_IMAGE_POSITIONS: string[] = [
   "bg-center", // vision  — centred
-  "bg-center md:bg-[76%_center]", // process — top on mobile, offset right on desktop
+  "bg-center md:bg-[86%_center]", // process — top on mobile, offset right on desktop
   "bg-center md:bg-[20%_center]", // impact  — bottom on mobile, right-aligned on desktop
 ];
 
